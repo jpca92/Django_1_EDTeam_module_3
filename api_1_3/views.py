@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from rest_framework import generics
 
-from .models import Category, Product
-from .serializers import CategorySerializer, ProductSerializer
+from .models import Category, Product, Client
+from .serializers import (
+    CategorySerializer, 
+    ProductSerializer,
+    ClientSerializer
+    )
 
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
@@ -11,4 +15,15 @@ class CategoryListView(generics.ListAPIView):
 class ProductListView(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    
+
+# ListCreateAPIView is used to handle both GET and POST requests
+# for the same endpoint. It allows you to list all objects and create a new one
+class ClientView(generics.ListCreateAPIView):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+
+# RetriveUpdateDestoyAPIView is used to handle GET, PUT, PATCH and DELETE requests
+class ClientDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Client.objects.all()
+    lookup_field = 'id'
+    serializer_class = ClientSerializer

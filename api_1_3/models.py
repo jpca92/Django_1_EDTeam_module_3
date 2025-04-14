@@ -15,3 +15,13 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+class Client (models.Model):
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    address = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+    
