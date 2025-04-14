@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from django.db import models
 from cloudinary.models import CloudinaryField
 class Category(models.Model):
@@ -24,4 +26,18 @@ class Client (models.Model):
 
     def __str__(self):
         return self.name
+
+class Order(models.Model):
+    code = models.CharField(max_length=200)
+    date = models.DateField(default= timezone.now)
+    client = models.ForeignKey(Client, on_delete=models.RESTRICT)
+
+class OrderProduct(models.Model):
+    order = models.ForeignKey(Order, related_name='order_products',on_delete=models.RESTRICT)
+    product = models.ForeignKey(Product, on_delete=models.RESTRICT)
+    quantity = models.IntegerField(default=1)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2)
+    def __str__ (self):
+        return f'{self.product.name} - {self.quantity}'
     

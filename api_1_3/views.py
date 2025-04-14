@@ -1,11 +1,15 @@
 from django.shortcuts import render
 from rest_framework import generics
 
-from .models import Category, Product, Client
+from .models import Category, Product, Client, Order, OrderProduct
 from .serializers import (
     CategorySerializer, 
     ProductSerializer,
-    ClientSerializer
+    ClientSerializer,
+    CategoryProdctSerializer,
+    OrderSerializer, 
+
+
     )
 
 class CategoryListView(generics.ListAPIView):
@@ -27,3 +31,14 @@ class ClientDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Client.objects.all()
     lookup_field = 'id'
     serializer_class = ClientSerializer
+
+# CategoryProductsView is used to retrieve a single category and its related products
+class CategoryProductsView(generics.ListAPIView):
+    queryset = Category.objects.all()
+    lookup_url_kwarg = 'id'
+    serializer_class = CategoryProdctSerializer
+
+
+class OrderCreateView(generics.CreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
