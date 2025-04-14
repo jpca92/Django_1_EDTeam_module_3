@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api_1_3',
+    'api_admin',
     'cloudinary',
 ]
 

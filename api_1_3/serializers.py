@@ -22,7 +22,7 @@ class ClientSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-"""serializers related tables """
+"""serializers related tables and generic views"""
 class CategoryProdctSerializer(serializers.ModelSerializer):
     products = ProductSerializer(many=True, read_only=True)
     class Meta:
@@ -36,7 +36,9 @@ class OrderProductSerializer(serializers.ModelSerializer):
         model = OrderProduct
         fields = ['product', 'quantity']
 
-
+# This serializer is used to create an order with its products
+# It uses the OrderProductSerializer to handle the nested order_products
+# It also calculates the subtotal for each product based on the quantity and price
 class OrderSerializer(serializers.ModelSerializer):
     order_products = OrderProductSerializer(many=True)
 
@@ -62,3 +64,8 @@ class OrderSerializer(serializers.ModelSerializer):
                 subtotal=subtotal
             )
         return order
+
+"""
+Views sets the serializer class to be used for the view
+"""
+
